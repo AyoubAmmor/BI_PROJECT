@@ -1,0 +1,94 @@
+<Schema name="My_PurchaseDM">
+  <Dimension type="StandardDimension" visible="true" name="Temps">
+    <Hierarchy name="default_Temps" visible="true" hasAll="true">
+      <Table name="Temps" schema="dbo" alias="">
+      </Table>
+      <Level name="id_date" visible="true" column="id_date" nameColumn="id_date" parentColumn="id_date" type="Integer" uniqueMembers="false">
+      </Level>
+      <Level name="Order_Date" visible="true" column="Order_Date" nameColumn="Order_Date" parentColumn="Order_Date" type="Date" uniqueMembers="false">
+      </Level>
+      <Level name="jour" visible="true" column="jour" nameColumn="jour" parentColumn="jour" type="Integer" uniqueMembers="false">
+      </Level>
+      <Level name="mois" visible="true" column="mois" nameColumn="mois" parentColumn="mois" type="Integer" uniqueMembers="false">
+      </Level>
+      <Level name="ann&#233;e" visible="true" column="annee" nameColumn="annee" parentColumn="annee" type="Integer" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="Vendeur">
+    <Hierarchy name="default_Vendeur" visible="true" hasAll="true">
+      <Table name="Vendeur" schema="dbo" alias="">
+      </Table>
+      <Level name="id_vendeur" visible="true" column="Vendor_id" nameColumn="Vendor_id" parentColumn="Vendor_id" type="Integer" uniqueMembers="false">
+      </Level>
+      <Level name="vendor_name" visible="true" column="vendor_name" nameColumn="vendor_name" parentColumn="vendor_name" type="String" uniqueMembers="false">
+      </Level>
+      <Level name="Credit_Rating" visible="true" column="credit_rating" nameColumn="credit_rating" parentColumn="credit_rating" type="Integer" uniqueMembers="false">
+      </Level>
+      <Level name="State" visible="true" column="state" nameColumn="state" parentColumn="state" type="String" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="Ship">
+    <Hierarchy name="default_Ship" visible="true" hasAll="true">
+      <Table name="Ship" schema="dbo" alias="">
+      </Table>
+      <Level name="id_ship" visible="true" column="Ship_id" nameColumn="Ship_id" parentColumn="Ship_id" type="Integer" uniqueMembers="false">
+      </Level>
+      <Level name="ship_name" visible="true" column="Ship_name" nameColumn="Ship_name" parentColumn="Ship_name" type="String" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Dimension type="StandardDimension" visible="true" name="Produit">
+    <Hierarchy name="default_Produit" visible="true" hasAll="true">
+      <Table name="Produit" schema="dbo" alias="">
+      </Table>
+      <Level name="id_produit" visible="true" column="Product_id" nameColumn="Product_id" parentColumn="Product_id" type="Integer" uniqueMembers="false">
+      </Level>
+      <Level name="Product_Name" visible="true" column="Product_Name" nameColumn="Product_Name" parentColumn="Product_Name" type="String" uniqueMembers="false">
+      </Level>
+      <Level name="size" visible="true" column="size" nameColumn="size" parentColumn="size" type="Numeric" uniqueMembers="false">
+      </Level>
+      <Level name="weight" visible="true" column="weight" nameColumn="weight" parentColumn="weight" type="Numeric" uniqueMembers="false">
+      </Level>
+      <Level name="Couleur" visible="true" column="Color" nameColumn="Color" parentColumn="Color" type="String" uniqueMembers="false">
+      </Level>
+      <Level name="Standard_Cost" visible="true" column="StandardCost" nameColumn="StandardCost" parentColumn="StandardCost" type="Numeric" uniqueMembers="false">
+      </Level>
+    </Hierarchy>
+  </Dimension>
+  <Cube name="Purchase_Cube" visible="true" cache="true" enabled="true">
+    <Table name="Achats" schema="dbo" alias="">
+    </Table>
+    <DimensionUsage source="Temps" name="Temps" visible="true" foreignKey="id_date">
+    </DimensionUsage>
+    <DimensionUsage source="Ship" name="Ship" visible="true" foreignKey="id_ship">
+    </DimensionUsage>
+    <DimensionUsage source="Vendeur" name="Vendeur" visible="true" foreignKey="id_vendor">
+    </DimensionUsage>
+    <DimensionUsage source="Produit" name="Produit" visible="true" foreignKey="id_product">
+    </DimensionUsage>
+    <Measure name="Qt&#233;_Achet&#233;e" column="Qte_Achetee" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Montant_Achats" column="montant_achats" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Qt&#233;_Rejet&#233;e" column="Qte_rejetee" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Qt&#233;_Recue" column="Qte_recue" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="moyenne_achats" column="moyenne_achats" datatype="Numeric" aggregator="avg" visible="true">
+    </Measure>
+    <Measure name="min_Achats" column="min_achats" datatype="Integer" aggregator="min" visible="true">
+    </Measure>
+    <Measure name="max_Achats" column="max_achats" datatype="Integer" aggregator="max" visible="true">
+    </Measure>
+    <Measure name="Qt&#233;_Freight" column="qte_freight" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Qt&#233;_Stock&#233;e" column="Stocked_Qty" datatype="Integer" aggregator="sum" visible="true">
+    </Measure>
+    <Measure name="Produits_en_Commande" column="Produits_en_Commande" datatype="Integer" aggregator="count" visible="true">
+    </Measure>
+    <Measure name="Somme_des_taxes" column="Somme_Taxe" datatype="Numeric" aggregator="sum" visible="true">
+    </Measure>
+  </Cube>
+</Schema>
